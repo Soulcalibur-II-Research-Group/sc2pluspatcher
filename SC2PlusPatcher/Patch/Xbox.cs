@@ -28,6 +28,23 @@ namespace SC2PlusPatcher
                 0x66A360B3,
                 0x3B005FC3
             };
+           /*
+            push   edi
+            mov    eax,0x3030303
+            mov    ecx,0x4a
+            mov    edi,0x3bb368
+            rep stos DWORD PTR es:[edi],eax
+            stos   WORD PTR es:[edi],ax
+            call   0xfffffed0
+            xor    eax,eax
+            mov    ds:0x3bb34c,eax
+            mov    ds:0x3bb350,eax
+            mov    ds:0x3bb354,eax
+            mov    ds:0x3bb358,eax
+            mov    ds:0x3bb35c,eax
+            mov    ds:0x3bb360,ax
+            pop    edi
+            ret */
 
             fs.Seek(0x465F0, SeekOrigin.Begin);
             for (int i = 0; i < 15; i++) Helper.writeUInt32B(bw, asm[i]);

@@ -164,14 +164,51 @@ namespace SC2PlusPatcher
             Human.WriteEntry(bw, siegfried);
         }
 
+        public class StageAllower{
+            public StageAllower() {
+                bool Arcade = false;
+                bool VSOriginal = false;
+                bool VSExtra = false;
+            }
+            public StageAllower(BinaryWriter bw){
+
+                    bw.Write((byte)(Arcade ? 1 : 0));
+                    bw.Write((byte)(VSOriginal ? 1 : 0));
+                    bw.Write((byte)(VSExtra ? 1 : 0));
+            }
+            public bool Arcade{ get; set; }
+            public bool VSOriginal{ get; set; }
+            public bool VSExtra{ get; set; }
+        }
+        /*
+        0 - No Model stage
+        1 - Eurydice Shrine
+        2 - Village of the Wind
+        3 - Palgaea Shrine
+        4 - Ostrheinsburg Chapel
+        5 - Kaminoi Castle
+        6 - Egyptian Ruins
+        7 - Imperial Capital Ayutthaya
+        8 - South France Mansion - Library
+        9 - Pirate's Alcove
+        A - Xiwei Siege Ruins
+        B - Chaos (Soulcalibur II)
+        C - Hwangseo Palace - Phoenix Court
+        D - Lakeside Coliseum
+        E - Money Pit
+        F - Egyptian Crypt
+        10 - Labyrinth
+        */
+        
         public static void UnlockStages(FileStream fs, BinaryWriter bw)
         {
             //byte[] bytes = new byte[9] { 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-            byte[] bytes = new byte[18] { 1, 0, 0, 
-                                         1, 1, 1, 1, 
-                                         1, 1, 1, 1,
-                                         1, 1, 1, 1,
-                                         1, 1, 1};
+            byte[] bytes = new byte[18] { 01, 00, 00, 
+                                            00, 00, 01,
+                                            00, 00, 01,
+                                            00, 00, 01,
+                                            00, 00, 01,
+                                            00, 00, 01 };
             fs.Seek(0x2795D5, SeekOrigin.Begin);
             bw.Write(bytes);
         }
