@@ -203,16 +203,29 @@ namespace SC2PlusPatcher
             bw.Write(0x0035C4D0);
         }
 
-        public static void SiegfriedWeaponFix(FileStream fs, BinaryWriter bw)
+        public static void WeaponFix(FileStream fs, BinaryWriter bw)
         {
-            // related to drawing weapon trail when attacking
+            // related to drawing weapon trail when attacking, Just Siegfried
             short[] data = new short[12] { 0x0072, 0x0072, 0x0073, 0x0074, 0x0075, 0x0076, 0x0077, 0x0078, 0x0079, 0x007A, 0x007B, 0x007C };
 
             fs.Seek(0x32D338, SeekOrigin.Begin);
             for (int i = 0; i < 12; i++) bw.Write(data[i]);
 
+            byte[] weaponAttachCodeIndex = new byte[26] { 0, 1, 2, 2, 8, 8, 8, 8, 3, 8, 8, 8, 4, 8, 5, 8, 8, 6, 5, 6, 2, 8, 8, 8, 9, 7 };
+            //Values start with charater index 0x03 - 0x1C
+
+
+
             // something to do with the bone the weapon is attached to?
-            // fixes his AA move
+            // fixes Siegfried AA move & Links Weapons
+
+            //Insert Bigol fix here( Lots of X86 asm )
+
+            //First order of busness is Moving the index array down 4 to add another offset
+            //  Move data Physicly down 4 bytes
+            //  Change the head index in code @ 478f3(Software space)/378F3(XBE Space) from FF 24 85 C8 7B 04 00 to FF 24 85 CC 7B 04 00
+
+            //Second Write in the new offset into the array, that being index 9 for link
             fs.Seek(0x37BF0, SeekOrigin.Begin);
             bw.Write((byte)5);
 

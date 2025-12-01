@@ -401,11 +401,12 @@ namespace SC2PlusPatcher
                     while (!sr.EndOfStream)
                     {
                         string line = sr.ReadLine();
-                        if (!line.Contains("#")) // skip # comments
+                        if (!line.Contains("#") && line.Length>0) // skip # comments and nulls
                         {
+                            char sep = ',';
                             FlistEntry flistFile = new FlistEntry();
-                            int idx = Convert.ToInt32(line.Split()[0], 16);
-                            string fn = line.Split()[1];
+                            int idx = Convert.ToInt32(line.Split(sep)[0], 16);
+                            string fn = line.Split(sep)[1];
                             flistFile.FileIndex = idx;
                             flistFile.FilePath = Path.Combine(folderPath, fn);
 
